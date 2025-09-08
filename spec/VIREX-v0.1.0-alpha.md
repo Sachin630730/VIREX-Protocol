@@ -105,15 +105,15 @@ VIREX consists of the following layers:
 
 ---
 
-## 7. Abuse Prevention  
+## 7. Abuse Prevention
 
-- **Proof-of-Work (PoW):** Each message requires solving a small computational puzzle.  
-- **Rate Limits:** Nodes enforce per-sender quotas to prevent flooding.  
-- **Auditing:** Independent auditors verify logs, routing behavior, and key directories.  
+- **Proof-of-Work (PoW):** Each message requires solving a small computational puzzle. See [Deep Dive §10.1](VIREX-DeepDive.md#101-proof-of-work-algorithm) for algorithm details.
+- **Rate Limits:** Nodes enforce per-sender quotas to prevent flooding.
+- **Auditing:** Independent auditors verify logs, routing behavior, and key directories.
 
 ---
 
-## 8. Governance Model  
+## 8. Governance Model
 
 - **Federated Nodes:** Multiple independent operators run mixnodes and directories.  
 - **Threshold Signatures:** Critical actions (e.g., key revocation) require M-of-N approval.  
