@@ -41,11 +41,40 @@ Community peers and federation provide the **infrastructure backbone**, ensuring
 - **Dummy messages** are inserted to ensure constant traffic levels.  
 
 ### 3.3 Packet Format (Alpha Version)
-| Field            | Size       | Purpose                                |
-|------------------|------------|-----------------------------------------|
-| Header (Encrypted)| Variable   | Next hop address + routing metadata     |
-| Payload           | Variable   | Encrypted inner packet or final message |
-| MAC               | 32 bytes   | Integrity check (HMAC-SHA256)           |
+
+Packets on the mixnet are **fixed-width** so that all nodes can parse them
+without ambiguity and so that packet size does not leak metadata. The alpha
+packet encodes exactly **1024 bytes** in the following order:
+
+| Field             | Size (bytes) | Purpose                                                      |
+|-------------------|--------------|--------------------------------------------------------------|
+| Version           | 1            | Packet format revision. Current alpha uses value `0x01`.     |
+| Header (encrypted)| 127          | Next-hop address and routing metadata, padded with randomness|
+| Payload           | 864          | Encrypted inner packet or final message. Zero padded.        |
+| MAC               | 32           | Integrity check (`HMAC-SHA256`) over the preceding 992 bytes.|
+
+**Ordering.** Byte `0` contains the version field. Bytes `1–127` are the
+encrypted header. Bytes `128–991` are the payload, and bytes `992–1023` carry
+the MAC. The MAC is computed over the version, header, and payload bytes.
+
+**Padding rules.**
+
+- Unused space inside the header **MUST** be filled with cryptographically
+  random bytes prior to encryption so every header is indistinguishable.
+- The plaintext payload **MUST** be followed by `0x00` bytes before encryption
+  so the encrypted payload is always exactly 864 bytes. This allows
+  implementations to deterministically parse packets without needing an
+  explicit length field.
+
+**Binary example** (`0x` prefixes omitted, spaces added for readability):
+
+```
+01                                                    # version
+aa aa aa … aa                                         # 127 byte encrypted header
+68 65 6c 6c 6f 00 … 00                                # payload: "hello" + padding
+bb bb bb … bb                                         # 32 byte MAC
+```
+
 
 ---
 
@@ -163,15 +192,29 @@ Metadata includes:
 
 ---
 
-## 10. Abuse Prevention  
+## 10. Abuse Prevention
 
-- **Proof-of-Work:** Each message requires solving a small puzzle before acceptance.  
-- **Rate Limits:** Nodes enforce per-sender quotas to prevent flooding attacks.  
-- **Auditing:** Logs allow public detection of misbehavior or censorship.  
+### 10.1 Proof-of-Work Algorithm
+
+VIREX employs a Hashcash-style **SHA-256 proof-of-work puzzle** to make large-scale spam economically costly while remaining inexpensive for legitimate users.
+
+1. **Challenge:** The first-hop mixnode issues a 128-bit random challenge `C` that is included with the message payload.
+2. **Puzzle:** The sender searches for a nonce `N` such that `SHA-256(C || payload || N)` has at least **22 leading zero bits**. This corresponds to a difficulty parameter `d = 22`.
+3. **Expected Solve Time:** At this difficulty, a commodity CPU performs about \(2^{22}\) hash evaluations, yielding an average solve time of ~200 ms per message.
+4. **Verification:** Upon receipt, nodes recompute the hash once and check that the output meets the difficulty target. Messages with invalid or missing PoW are discarded.
+5. **Adaptive Difficulty:** Federation governance can raise or lower `d` to match network conditions.
+
+### 10.2 Rate Limits
+
+Nodes enforce per-sender quotas to prevent flooding attacks.
+
+### 10.3 Auditing
+
+Logs allow public detection of misbehavior or censorship.
 
 ---
 
-## 11. Privacy Levels  
+## 11. Privacy Levels
 
 | Level | Cover Traffic       | Latency Impact      | Use Case                              |
 |-------|---------------------|---------------------|---------------------------------------|
