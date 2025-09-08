@@ -163,15 +163,29 @@ Metadata includes:
 
 ---
 
-## 10. Abuse Prevention  
+## 10. Abuse Prevention
 
-- **Proof-of-Work:** Each message requires solving a small puzzle before acceptance.  
-- **Rate Limits:** Nodes enforce per-sender quotas to prevent flooding attacks.  
-- **Auditing:** Logs allow public detection of misbehavior or censorship.  
+### 10.1 Proof-of-Work Algorithm
+
+VIREX employs a Hashcash-style **SHA-256 proof-of-work puzzle** to make large-scale spam economically costly while remaining inexpensive for legitimate users.
+
+1. **Challenge:** The first-hop mixnode issues a 128-bit random challenge `C` that is included with the message payload.
+2. **Puzzle:** The sender searches for a nonce `N` such that `SHA-256(C || payload || N)` has at least **22 leading zero bits**. This corresponds to a difficulty parameter `d = 22`.
+3. **Expected Solve Time:** At this difficulty, a commodity CPU performs about \(2^{22}\) hash evaluations, yielding an average solve time of ~200 ms per message.
+4. **Verification:** Upon receipt, nodes recompute the hash once and check that the output meets the difficulty target. Messages with invalid or missing PoW are discarded.
+5. **Adaptive Difficulty:** Federation governance can raise or lower `d` to match network conditions.
+
+### 10.2 Rate Limits
+
+Nodes enforce per-sender quotas to prevent flooding attacks.
+
+### 10.3 Auditing
+
+Logs allow public detection of misbehavior or censorship.
 
 ---
 
-## 11. Privacy Levels  
+## 11. Privacy Levels
 
 | Level | Cover Traffic       | Latency Impact      | Use Case                              |
 |-------|---------------------|---------------------|---------------------------------------|
