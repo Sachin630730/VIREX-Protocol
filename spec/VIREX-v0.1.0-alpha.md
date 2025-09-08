@@ -8,7 +8,7 @@
 
 ## 1. Introduction  
 
-VIREX (**Verifiable Infrastructure for Routing with Encryption and eXtensibility**) is a **privacy-preserving communication protocol** designed as a **learning project** to explore modern cryptography, mixnet routing, metadata protection, and federated governance.  
+VIREX (**Verifiable Infrastructure for Routing with Encryption and eXtensibility**) is a **privacy-preserving communication protocol** designed as a **learning project** to explore modern cryptography, mixnet routing, metadata protection, and federated Governance.  
 
 This specification defines the **core concepts, architecture, and security goals** of VIREX in its alpha version.  
 
@@ -116,7 +116,7 @@ VIREX consists of the following layers:
 ## 8. Governance Model
 
 - **Federated Nodes:** Multiple independent operators run mixnodes and directories.  
-- **Threshold Signatures:** Critical actions (e.g., key revocation) require M-of-N approval.  
+- **FROST Threshold Signatures:** Critical actions (e.g., key revocation) require M-of-N approval. See [governance/Governance.md](../governance/Governance.md).  
 - **Transparency Logs:** Publicly auditable, append-only logs detect malicious changes.  
 
 ---
