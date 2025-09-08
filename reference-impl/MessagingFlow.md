@@ -40,30 +40,42 @@ This document describes the **end-to-end messaging flow** in the VIREX protocol:
 ---
 
 ## 4. Sequence Diagram  
-### 1. Messaging Flow, end to end delivery
+
+### 1. ODS Lookup Flow, anonymous key discovery
+```MERMAID
+sequenceDiagram
+
+    %% Anonymous request through mixnet
+    Alice->>M1: 1. ODS lookup request
+    M1->>M2: 2. Forward after Poisson delay
+    M2->>M3: 3. Forward after Poisson delay
+    M3->>ODS: 4. Lookup recipient key
+
+    %% Response and verification
+    ODS-->>M3: 5. Key record, inclusion proof, root id
+    M3-->>M2: 6. Return response
+    M2-->>M1: 7. Return response
+    M1-->>Alice: 8. Return response
+    Alice->>Logs: 9. Fetch signed root checkpoint
+    Logs-->>Alice: 10. Signed root with M of N signatures
+```
+
+### 2. Messaging Flow, end to end delivery
 ```MERMAID
 %% Messaging Flow, end to end delivery
 sequenceDiagram
 
     %% Send path
-    Alice Client->>Mixnode A: 1. Send onion packet, includes PoW
-    Mixnode A->>Mixnode B: 2. Forward after Poisson delay
-    Mixnode B->>Mixnode C: 3. Forward after Poisson delay
-    Mixnode C->>Mailbox Server: 4. Store encrypted message block
+    Alice->>M1: 1. Send onion packet, includes PoW
+    M1->>M2: 2. Forward after Poisson delay
+    M2->>M3: 3. Forward after Poisson delay
+    M3->>Mailbox: 4. Store encrypted message block
 
     %% Retrieve path
-    Bob Client->>Mailbox Server: 5. Poll at fixed interval
-    Mailbox Server-->>Bob Client: 6. Return constant size block
-    Bob Client->>Bob Client: 7. Decrypt end to end payload
+    Bob->>Mailbox: 5. Poll at fixed interval
+    Mailbox-->>Bob: 6. Return constant size block
+    Bob->>Bob: 7. Decrypt end to end payload
 
-```
-
-### 2. Mailbox Polling, constant size responses
-```MERMAID
-sequenceDiagram
-    Bob Client->>Mailbox Server: 1. Poll at fixed interval
-    Mailbox Server-->>Bob Client: 2. Return constant size block
-    Bob Client->>Bob Client: 3. Decrypt payload, discard dummy if needed
 ```
 
 ---

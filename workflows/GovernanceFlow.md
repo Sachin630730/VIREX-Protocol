@@ -36,7 +36,30 @@ This document describes how governance decisions are made in the VIREX protocol 
 
 ## 4. Sequence diagram  
 
-TODO: Sequence diagram will be added in a future revision.  
+### 1. Governance Flow, M of N approvals
+```MERMAID
+%% Governance Flow, M of N approvals
+sequenceDiagram
+    Member A->> Member A: 1. Draft proposal
+    Member A->> Member B: 2. Request signature
+    Member B-->> Member A: 3. Signature B
+    Member A->> Member C: 4. Request signature
+    Member C-->>Member A: 5. Signature C
+    Member A->> Transparency Logs: 6. Submit proposal with signatures
+    Transparency Logs -->>Auditors: 7. New checkpoint available
+    Auditors->>Auditors: 8. Verify inclusion and consistency
+
+```
+
+### 2. Transparency Log Update, publishing new ODS root
+```MERMAID
+sequenceDiagram
+    ODS Server->>Federation: 1. New ODS root, request co sign
+    Federation-->>ODS Server: 2. M of N signatures
+    ODS Server->>Transparency Logs: 3. Publish root with signatures
+    Transparency Logs-->>Auditors: 4. Checkpoint ready
+    Auditors->>Auditors: 5. Verify signatures and append only
+```
 
 ---
 

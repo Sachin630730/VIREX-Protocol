@@ -36,7 +36,16 @@ This document describes the responsibilities and workflow of auditors in the VIR
 
 ## 4. Sequence diagram  
 
-TODO: Sequence diagram will be added in a future revision.  
+```MERMAID
+sequenceDiagram
+    Auditor->>Transparency Logs: 1. Fetch latest checkpoint
+    Transparency Logs-->>Auditor: 2. Root hash and tree size
+    Auditor->>Transparency Logs: 3. Request consistency proof
+    Transparency Logs-->>Auditor: 4. Consistency proof
+    Auditor->>Mailbox Server: 5. Check availability metrics
+    Auditor->>Mixnode A: 6. Check uptime and routing integrity
+    Auditor->>Auditor: 7. Publish signed auditor report
+```
 
 ---
 

@@ -42,8 +42,24 @@ This document describes how a client retrieves a recipient's public key using th
 
 ## 4. Sequence diagram  
 
-TODO: Sequence diagram will be added in a future revision.  
+### 1. ODS Lookup Flow, anonymous key discovery
+```MERMAID
+sequenceDiagram
 
+    %% Anonymous request through mixnet
+    Alice Client->>Mixnode A: 1. ODS lookup request
+    Mixnode A->>Mixnode B: 2. Forward after Poisson delay
+    Mixnode B->>Mixnode C: 3. Forward after Poisson delay
+    Mixnode C->>ODS Server: 4. Lookup recipient key
+
+    %% Response and verification
+    ODS Server-->>Mixnode C: 5. Key record, inclusion proof, root id
+    Mixnode C-->>Mixnode B: 6. Return response
+    Mixnode B-->>Mixnode A: 7. Return response
+    Mixnode A-->>Alice Client: 8. Return response
+    Alice Client->>Transparency Logs: 9. Fetch signed root checkpoint
+    Transparency Logs-->>Alice Client: 10. Signed root with M of N signatures
+```
 ---
 
 ## 5. Returned data structures, conceptual format  

@@ -37,7 +37,20 @@ This document describes how VIREX prevents abuse, such as spam, denial-of-servic
 
 ## 4. Sequence diagram  
 
-TODO: Sequence diagram will be added in a future revision.  
+```MERMAID
+%% Abuse Prevention Flow, PoW and rate limiting
+sequenceDiagram
+    Client->>Mixnode A: 1. Submit message plus PoW
+    Mixnode A->>Mixnode A: 2. Verify PoW and rate limit
+    alt Invalid or over limit
+        Mixnode A-->>Client: 3. Reject with backoff
+    else Accepted
+        Mixnode A-->>Client: 3. Accepted
+    end
+    Federation->>Transparency Logs: 4. Update PoW parameters, M of N
+    Transparency Logs-->>Auditors: 5. New config checkpoint
+    Auditors->>Auditors: 6. Verify and publish notice
+```  
 
 ---
 

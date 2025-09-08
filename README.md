@@ -1,9 +1,10 @@
 
-# VIREX Protocol – v0.1.0-alpha  
 
-<p align="center">
-  <img src="docs/virex_logo.png" alt="VIREX Logo" width="200"/>
+<p align="left">
+  <img src="docs/virex_logo.png" alt="VIREX Logo" width="1000"/>
 </p>
+
+# VIREX Protocol – v0.1.0-alpha  
 
 **Author:** Syon Foppen  
 **Status:** Alpha – early stage, experimental, not production ready  

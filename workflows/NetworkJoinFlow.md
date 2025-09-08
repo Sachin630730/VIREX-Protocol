@@ -36,7 +36,17 @@ This document describes the process for new nodes (mixnodes, mailbox servers, OD
 
 ## 4. Sequence diagram  
 
-TODO: Sequence diagram will be added in a future revision.  
+```MERMAID
+%% Network Join Flow, onboarding a new node
+sequenceDiagram
+    Node Operator->>Federation: 1. Submit join request with public key
+    Federation->>Federation: 2. Review and vote
+    Federation-->>Node Operator: 3. Approval with M of N signatures
+    Federation->>Transparency Logs: 4. Publish onboarding event
+    Transparency Logs-->>Auditors: 5. Checkpoint available
+    Auditors->>Auditors: 6. Verify inclusion and consistency
+    Existing Nodes->>Existing Nodes: 7. Update routing tables
+```
 
 ---
 
