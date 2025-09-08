@@ -14,11 +14,12 @@
 
 This project exists to **learn about cryptography**, **secure communication protocols**, and **privacy-preserving technologies** by designing and documenting a hypothetical protocol called **VIREX**.  
 
-- It is **not production-ready** and should **not be used as-is**.  
-- It has **not been audited** for real-world security.  
-- It is **for educational and research purposes only**.  
+- It is **not production-ready** and should **not be used as-is**.
+- It has **not been audited** for real-world security.
+- It is **for educational and research purposes only**.
+- Parts of this protocol were generated with the assistance of **AI tools** and may contain mistakes; this is a learning experiment to assess the quality and usefulness of AI-generated content.
 
-All designs include **abuse prevention**, **transparency**, and **auditing mechanisms**, but security feedback is highly encouraged as part of the learning process.  
+All designs include **abuse prevention**, **transparency**, and **auditing mechanisms**, but security feedback is highly encouraged as part of the learning process.
 
 ---
 
