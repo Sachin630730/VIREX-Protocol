@@ -2,7 +2,7 @@
 # VIREX Protocol – v0.1.0-alpha  
 
 <p align="center">
-  <img src="docs/virex_logo.png" alt="VIREX Logo" width="200"/>
+  <img src="docs/virex_logo.png" alt="VIREX Logo"/>
 </p>
 
 **Author:** Syon Foppen  
