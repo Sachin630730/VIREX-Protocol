@@ -204,6 +204,30 @@ VIREX employs a Hashcash-style **SHA-256 proof-of-work puzzle** to make large-sc
 4. **Verification:** Upon receipt, nodes recompute the hash once and check that the output meets the difficulty target. Messages with invalid or missing PoW are discarded.
 5. **Adaptive Difficulty:** Federation governance can raise or lower `d` to match network conditions.
 
+**Pseudocode Example**
+
+```text
+# first-hop mixnode
+C = Random128()
+send_challenge(C)
+
+# sender
+repeat {
+    N = Random()
+} until LeadingZeroBits(SHA256(C || payload || N)) \>= 22
+packet.payload.pow_nonce = N   # embed solution before routing
+send_to_mixnet(packet)
+
+# verification at first hop
+if LeadingZeroBits(SHA256(C || payload || packet.payload.pow_nonce)) \>= 22 {
+    forward(packet)
+} else {
+    drop(packet)
+}
+```
+
+The sender writes the computed nonce `N` alongside the challenge `C` into a dedicated PoW field in the outer payload **before** the onion layers are applied. This allows the first-hop mixnode to validate the puzzle immediately after decrypting its layer, prior to forwarding the packet through the mixnet.
+
 ### 10.2 Rate Limits
 
 Nodes enforce per-sender quotas to prevent flooding attacks.
