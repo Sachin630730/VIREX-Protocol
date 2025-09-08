@@ -5,7 +5,6 @@
 </p>
 
 # VIREX Protocol – v0.1.0-alpha  
-
 **Author:** Syon Foppen  
 **Status:** Alpha – early stage, experimental, not production ready  
 
