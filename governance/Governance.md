@@ -39,20 +39,32 @@ This document describes the **roles**, **processes**, and **cryptographic mechan
 
 ## 4. Federated Decision-Making  
 
-### 4.1 Threshold Signatures  
-- **M-of-N model:** At least M independent signatures required for critical actions.  
-- Example:  
-  - 5 federation members total.  
-  - M = 3 required for valid approval.  
-- Uses **Ed25519** keys combined with threshold cryptography.  
+### 4.1 Threshold Signatures
+- **M-of-N model:** At least M independent signatures required for critical actions.
+- Example:
+  - 5 federation members total.
+  - M = 3 required for valid approval.
+- Uses **FROST** over **Ed25519** for threshold signatures ([IETF draft](https://www.ietf.org/archive/id/draft-irtf-cfrg-frost-16.html), [Zcash reference implementation](https://github.com/ZcashFoundation/frost)).
+- **Aggregation example:** Members A, C, and E produce partial signatures. An aggregator combines them into a single Ed25519 signature, which any peer verifies against the group public key like a normal Ed25519 signature.
 
-### 4.2 Actions Requiring Threshold Approval  
+### 4.2 Key Lifecycle
+
+#### Key Generation
+- Federation members run a distributed key generation (DKG) protocol for FROST, deriving a shared public key and private key shares without ever constructing the full secret key.
+
+#### Share Distribution
+- Each member receives its share over authenticated secure channels and stores it in hardened hardware (e.g., HSM). Commitments to the generated shares are recorded in transparency logs for later auditing.
+
+#### Rotation
+- Keys are rotated periodically or when membership changes by rerunning the DKG. Old shares are securely destroyed and a new group public key is logged for auditors.
+
+### 4.3 Actions Requiring Threshold Approval
 - Adding or removing federation members.  
 - Updating ODS root hashes in transparency logs.  
 - Rotating signing keys for nodes or directories.  
 - Revoking misbehaving or compromised nodes.  
 
-### 4.3 Governance Workflow  
+### 4.4 Governance Workflow
 
 1. **Proposal:** Federation member creates a governance action request.  
 2. **Review:** Other members verify request validity.  
