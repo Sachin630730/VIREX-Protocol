@@ -41,11 +41,40 @@ Community peers and federation provide the **infrastructure backbone**, ensuring
 - **Dummy messages** are inserted to ensure constant traffic levels.  
 
 ### 3.3 Packet Format (Alpha Version)
-| Field            | Size       | Purpose                                |
-|------------------|------------|-----------------------------------------|
-| Header (Encrypted)| Variable   | Next hop address + routing metadata     |
-| Payload           | Variable   | Encrypted inner packet or final message |
-| MAC               | 32 bytes   | Integrity check (HMAC-SHA256)           |
+
+Packets on the mixnet are **fixed-width** so that all nodes can parse them
+without ambiguity and so that packet size does not leak metadata. The alpha
+packet encodes exactly **1024 bytes** in the following order:
+
+| Field             | Size (bytes) | Purpose                                                      |
+|-------------------|--------------|--------------------------------------------------------------|
+| Version           | 1            | Packet format revision. Current alpha uses value `0x01`.     |
+| Header (encrypted)| 127          | Next-hop address and routing metadata, padded with randomness|
+| Payload           | 864          | Encrypted inner packet or final message. Zero padded.        |
+| MAC               | 32           | Integrity check (`HMAC-SHA256`) over the preceding 992 bytes.|
+
+**Ordering.** Byte `0` contains the version field. Bytes `1–127` are the
+encrypted header. Bytes `128–991` are the payload, and bytes `992–1023` carry
+the MAC. The MAC is computed over the version, header, and payload bytes.
+
+**Padding rules.**
+
+- Unused space inside the header **MUST** be filled with cryptographically
+  random bytes prior to encryption so every header is indistinguishable.
+- The plaintext payload **MUST** be followed by `0x00` bytes before encryption
+  so the encrypted payload is always exactly 864 bytes. This allows
+  implementations to deterministically parse packets without needing an
+  explicit length field.
+
+**Binary example** (`0x` prefixes omitted, spaces added for readability):
+
+```
+01                                                    # version
+aa aa aa … aa                                         # 127 byte encrypted header
+68 65 6c 6c 6f 00 … 00                                # payload: "hello" + padding
+bb bb bb … bb                                         # 32 byte MAC
+```
+
 
 ---
 
